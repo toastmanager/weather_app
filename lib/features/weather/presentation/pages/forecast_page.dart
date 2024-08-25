@@ -35,7 +35,6 @@ class ForecastPage extends StatelessWidget {
               }
               if (state is WeatherLoadingState) {
                 return const Skeletonizer(
-                  enabled: true,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
