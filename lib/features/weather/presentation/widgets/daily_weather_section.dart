@@ -31,46 +31,43 @@ class DailyWeatherSection extends StatelessWidget {
     );
   }
 
-  SizedBox _dailyWeatherSection(DailyWeather daily) {
-    return SizedBox(
-      height: 145,
-      child: ListView.separated(
-          scrollDirection: Axis.horizontal,
-          itemCount: daily.time.length,
-          separatorBuilder: (context, index) => const SizedBox(width: 16),
-          itemBuilder: (context, index) {
-            return Container(
-              decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surfaceContainer,
-                  borderRadius: BorderRadius.circular(12)),
-              width: 100,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(DateFormat.E().format(daily.time[index]),
-                      style: Theme.of(context).textTheme.bodyMedium),
-                  RichText(
-                    text: TextSpan(children: [
-                      TextSpan(
-                          text: '${daily.tempMax[index].round()}°C ',
-                          style: Theme.of(context).textTheme.bodyMedium),
-                      TextSpan(
-                          text: '${daily.tempMin[index].round()}°C',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium
-                              ?.copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onSurface
-                                      .withOpacity(0.6)))
-                    ]),
-                  ),
-                  Text('Code: ${daily.weatherCode[index]}')
-                ],
-              ),
-            );
-          }),
-    );
+  Widget _dailyWeatherSection(DailyWeather daily) {
+    return ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemCount: daily.time.length,
+        separatorBuilder: (context, index) => const SizedBox(width: 16),
+        itemBuilder: (context, index) {
+          return Container(
+            decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surfaceContainer,
+                borderRadius: BorderRadius.circular(12)),
+            width: 100,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(DateFormat.E().format(daily.time[index]),
+                    style: Theme.of(context).textTheme.bodyMedium),
+                RichText(
+                  text: TextSpan(children: [
+                    TextSpan(
+                        text: '${daily.tempMax[index].round()}°C ',
+                        style: Theme.of(context).textTheme.bodyMedium),
+                    TextSpan(
+                        text: '${daily.tempMin[index].round()}°C',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSurface
+                                    .withOpacity(0.6)))
+                  ]),
+                ),
+                Text('Code: ${daily.weatherCode[index]}')
+              ],
+            ),
+          );
+        });
   }
 }
