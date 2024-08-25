@@ -14,10 +14,12 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   }
 
   Future<void> _fetchWeather(WeatherFetchEvent event, Emitter emit) async {
+    emit(WeatherLoadingState());
     try {
       final weather = await fetchWeather.execute();
       emit(WeatherLoadedState(weather: weather));
     } catch (e) {
+      emit(const WeatherFailedState(message: 'Failed to fetch weather'));
       rethrow;
     }
   }

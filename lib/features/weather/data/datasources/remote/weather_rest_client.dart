@@ -8,7 +8,7 @@ part 'weather_rest_client.g.dart';
 abstract class WeatherRestClient {
   factory WeatherRestClient(Dio dio, {String baseUrl}) = _WeatherRestClient;
 
-  @GET('/forecast?latitude={latitude}&longitude={longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timeformat=unixtime')
+  @GET('/forecast?latitude={latitude}&longitude={longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&hourly=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&wind_speed_unit=ms&timeformat=unixtime')
   Future<WeatherModel> getWeather(
     @Path() double latitude,
     @Path() double longitude,
