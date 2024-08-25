@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:weather_app/features/weather/presentation/bloc/weather_bloc.dart';
 import 'package:weather_app/features/weather/presentation/pages/forecast_page.dart';
 import 'package:weather_app/injection.dart' as di;
@@ -24,7 +25,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         textTheme: Theme.of(context).textTheme.apply(
           fontSizeDelta: 2,
-        )
+          fontFamily: GoogleFonts.onest().fontFamily,
+        ),
       ),
       home: MultiBlocProvider(
         providers: [
