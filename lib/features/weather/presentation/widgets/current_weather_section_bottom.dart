@@ -4,8 +4,8 @@ import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:weather_app/features/weather/presentation/bloc/weather_bloc.dart';
 
-class CurrentWeatherBottomSectionBuilder extends StatelessWidget {
-  const CurrentWeatherBottomSectionBuilder({
+class CurrentWeatherSectionBottom extends StatelessWidget {
+  const CurrentWeatherSectionBottom({
     super.key,
   });
 

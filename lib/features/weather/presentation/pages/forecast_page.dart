@@ -20,7 +20,7 @@ class ForecastPage extends StatelessWidget {
           SizedBox(height: 24),
           Divider(),
           SizedBox(height: 24),
-          CurrentWeatherBottomSectionBuilder()
+          CurrentWeatherSectionBottom()
         ],
       ),
     );
