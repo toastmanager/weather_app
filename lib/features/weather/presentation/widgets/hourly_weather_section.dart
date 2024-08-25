@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:weather_app/core/utils/weather_icon_mapper.dart';
 import 'package:weather_app/features/weather/domain/entities/weather.dart';
 import 'package:weather_app/features/weather/presentation/bloc/weather_bloc.dart';
 
@@ -44,8 +46,9 @@ class HourlyWeatherSection extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(DateFormat.jm().format(hourly.time[index])),
+                SvgPicture.asset(WeatherIconMapper.getSvgFilePath(
+                    hourly.weatherCode[index])),
                 Text('${hourly.temp[index]} °C'),
-                Text('Code: ${hourly.weatherCode[index]}')
               ],
             ),
           );
