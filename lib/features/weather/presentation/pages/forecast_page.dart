@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:weather_app/features/weather/presentation/bloc/weather_bloc.dart';
 
 class ForecastPage extends StatelessWidget {
@@ -33,7 +34,20 @@ class ForecastPage extends StatelessWidget {
                 );
               }
               if (state is WeatherLoadingState) {
-                return const CircularProgressIndicator();
+                return const Skeletonizer(
+                  enabled: true,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Temperature: °C'),
+                      Text('Relative Humidity: mm'),
+                      Text('Apparent Temp: °C'),
+                      Text('Last check:'),
+                      Text('Weather code:'),
+                      Text('Wind speed:'),
+                    ],
+                  ),
+                );
               }
               if (state is WeatherFailedState) {
                 return Text(state.message);
