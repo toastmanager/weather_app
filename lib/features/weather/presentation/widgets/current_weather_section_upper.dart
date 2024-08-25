@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:weather_app/core/utils/weather_icon_mapper.dart';
 import 'package:weather_app/features/weather/presentation/bloc/weather_bloc.dart';
 
 class CurrentWeatherSectionUpper extends StatelessWidget {
@@ -13,14 +15,18 @@ class CurrentWeatherSectionUpper extends StatelessWidget {
     return BlocBuilder<WeatherBloc, WeatherState>(
       builder: (context, state) {
         if (state is WeatherLoadedState) {
-          final date = state.weather.current.time;
-          final temperature = state.weather.current.temp.round();
-          return _currentWeatherSectionUpper(date, context, temperature);
+          final currentWeather = state.weather.current;
+          final date = currentWeather.time;
+          final temperature = currentWeather.temp.round();
+          final weatherCode = currentWeather.weatherCode;
+          return _currentWeatherSectionUpper(
+              date, context, temperature, weatherCode);
         }
 
         if (state is WeatherLoadingState) {
           return Skeletonizer(
-              child: _currentWeatherSectionUpper(DateTime.now(), context, 21));
+              child:
+                  _currentWeatherSectionUpper(DateTime.now(), context, 21, 0));
         }
 
         return const Text('Unexpected Error');
@@ -29,7 +35,7 @@ class CurrentWeatherSectionUpper extends StatelessWidget {
   }
 
   Column _currentWeatherSectionUpper(
-      DateTime date, BuildContext context, int temperature) {
+      DateTime date, BuildContext context, int temperature, int weatherCode) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -59,9 +65,14 @@ class CurrentWeatherSectionUpper extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 16),
-        const SizedBox(
+        SizedBox(
           height: 200,
-          child: Center(child: Text('Weather code')),
+          child: Center(
+            child: SvgPicture.asset(
+              WeatherIconMapper.getSvgFilePath(weatherCode),
+              height: 200,
+            ),
+          ),
         ),
         const SizedBox(height: 16),
         Text('$temperature°C',

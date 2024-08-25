@@ -22,6 +22,7 @@ dependencies:
   skeletonizer: ^1.4.2
   google_fonts: ^6.2.1
   flutter_tabler_icons: ^1.36.0
+  flutter_svg: ^2.0.10+1
 
 dev_dependencies:
   flutter_test:
@@ -34,3 +35,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/weather_icons/
