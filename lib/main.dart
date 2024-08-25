@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,25 +20,30 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Weather Forecast App',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-        textTheme: Theme.of(context).textTheme.apply(
-          fontSizeDelta: 2,
-          fontFamily: GoogleFonts.onest().fontFamily,
+        title: 'Weather Forecast App',
+        scrollBehavior: CustomScrollBehavior(),
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+          textTheme: Theme.of(context).textTheme.apply(
+                fontSizeDelta: 2,
+                fontFamily: GoogleFonts.onest().fontFamily,
+              ),
         ),
-      ),
-      home: MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (_) => di.locator<WeatherBloc>())
-        ],
-        child: const Scaffold(
-          body: SafeArea(
-            child: ForecastPage(),
-          ),
-        )
-      )
-    );
+        home: MultiBlocProvider(
+            providers: [BlocProvider(create: (_) => di.locator<WeatherBloc>())],
+            child: const Scaffold(
+              body: SafeArea(
+                child: ForecastPage(),
+              ),
+            )));
   }
+}
+
+class CustomScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+      };
 }

@@ -13,18 +13,20 @@ class ForecastPage extends StatelessWidget {
     context.read<WeatherBloc>().add(WeatherFetchEvent());
     return const Padding(
       padding: EdgeInsets.all(24),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CurrentWeatherSectionUpper(),
-          SizedBox(height: 24),
-          Divider(),
-          SizedBox(height: 24),
-          CurrentWeatherSectionBottom(),
-          SizedBox(height: 24),
-          HourlyWeatherSection()
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CurrentWeatherSectionUpper(),
+            SizedBox(height: 24),
+            Divider(),
+            SizedBox(height: 24),
+            CurrentWeatherSectionBottom(),
+            SizedBox(height: 24),
+            HourlyWeatherSection()
+          ],
+        ),
       ),
     );
   }
