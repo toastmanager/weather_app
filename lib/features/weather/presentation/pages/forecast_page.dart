@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:weather_app/features/weather/presentation/bloc/weather_bloc.dart';
 
@@ -72,7 +73,7 @@ class CurrentWeatherSection extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(Icons.thermostat,
+            Icon(TablerIcons.thermometer,
                 color: Theme.of(context).colorScheme.primary),
             const SizedBox(width: 4),
             Text('Apparent Temp: $apparentTemp °C',
@@ -82,7 +83,7 @@ class CurrentWeatherSection extends StatelessWidget {
         const SizedBox(height: 4),
         Row(
           children: [
-            Icon(Icons.waterfall_chart,
+            Icon(TablerIcons.cloud_rain,
                 color: Theme.of(context).colorScheme.primary),
             const SizedBox(width: 4),
             Text('Relative Humidity: $relativeHumidity mm',
@@ -92,7 +93,7 @@ class CurrentWeatherSection extends StatelessWidget {
         const SizedBox(height: 4),
         Row(
           children: [
-            Icon(Icons.air_rounded,
+            Icon(TablerIcons.wind,
                 color: Theme.of(context).colorScheme.primary),
             const SizedBox(width: 4),
             Text('Wind speed: $windSpeed m/s',
@@ -102,7 +103,7 @@ class CurrentWeatherSection extends StatelessWidget {
         const SizedBox(height: 4),
         Row(
           children: [
-            Icon(Icons.water_drop_rounded,
+            Icon(TablerIcons.droplet,
                 color: Theme.of(context).colorScheme.primary),
             const SizedBox(width: 4),
             Text('Precipitation Probability: $precipitationProbability %',
