@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:weather_app/core/utils/weather_icon_mapper.dart';
 import 'package:weather_app/features/weather/domain/entities/weather.dart';
 import 'package:weather_app/features/weather/presentation/bloc/weather_bloc.dart';
 
@@ -47,6 +49,9 @@ class DailyWeatherSection extends StatelessWidget {
               children: [
                 Text(DateFormat.E().format(daily.time[index]),
                     style: Theme.of(context).textTheme.bodyMedium),
+                SvgPicture.asset(
+                  WeatherIconMapper.getSvgFilePath(daily.weatherCode[index])
+                ),
                 RichText(
                   text: TextSpan(children: [
                     TextSpan(
@@ -64,7 +69,6 @@ class DailyWeatherSection extends StatelessWidget {
                                     .withOpacity(0.6)))
                   ]),
                 ),
-                Text('Code: ${daily.weatherCode[index]}')
               ],
             ),
           );
