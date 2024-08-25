@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:weather_app/features/weather/presentation/bloc/weather_bloc.dart';
 
 class ForecastPage extends StatelessWidget {
@@ -25,7 +26,7 @@ class ForecastPage extends StatelessWidget {
                     Text('Temperature: ${currentWeather.temp} °C'),
                     Text('Relative Humidity: ${currentWeather.relativeHumidity} mm'),
                     Text('Apparent Temp: ${currentWeather.apparentTemp} °C'),
-                    Text('Last check: ${currentWeather.time}'),
+                    Text('Last check: ${DateFormat.yMMMMEEEEd().add_jm().format(currentWeather.time)}'),
                     Text('Weather code: ${currentWeather.weatherCode}'),
                     Text('Wind speed: ${currentWeather.windSpeed} m/s'),
                   ],
