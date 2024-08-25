@@ -50,7 +50,8 @@ class CurrentWeatherSectionUpper extends StatelessWidget {
               ],
             ),
             IconButton(
-                onPressed: () {},
+                onPressed: () =>
+                    context.read<WeatherBloc>().add(WeatherFetchEvent()),
                 icon: const Icon(
                   TablerIcons.reload,
                   size: 40,
