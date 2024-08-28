@@ -39,31 +39,7 @@ class CurrentWeatherSectionUpper extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  DateFormat.yMMMd().format(date),
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleLarge
-                      ?.copyWith(fontWeight: FontWeight.bold),
-                ),
-                Text(DateFormat.EEEE().add_jm().format(date)),
-              ],
-            ),
-            IconButton(
-                onPressed: () =>
-                    context.read<WeatherBloc>().add(WeatherFetchEvent()),
-                icon: const Icon(
-                  TablerIcons.reload,
-                  size: 40,
-                ))
-          ],
-        ),
+        _actions(date, context),
         const SizedBox(height: 16),
         SizedBox(
           height: 200,
@@ -80,6 +56,46 @@ class CurrentWeatherSectionUpper extends StatelessWidget {
                 .textTheme
                 .displaySmall
                 ?.copyWith(fontWeight: FontWeight.bold)),
+      ],
+    );
+  }
+
+  Row _actions(DateTime date, BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        IconButton(
+            onPressed: () {}, icon: const Icon(TablerIcons.settings, size: 40)),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              DateFormat.yMMMd().format(date),
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge
+                  ?.copyWith(fontWeight: FontWeight.bold),
+            ),
+            RichText(
+                text: TextSpan(children: [
+              TextSpan(
+                  text: '${DateFormat.EEEE().format(date)} ',
+                  style: Theme.of(context).textTheme.bodyMedium),
+              TextSpan(
+                  text: DateFormat.jm().format(date),
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5)
+                  )),
+            ])),
+          ],
+        ),
+        IconButton(
+            onPressed: () =>
+                context.read<WeatherBloc>().add(WeatherFetchEvent()),
+            icon: const Icon(
+              TablerIcons.reload,
+              size: 40,
+            ))
       ],
     );
   }

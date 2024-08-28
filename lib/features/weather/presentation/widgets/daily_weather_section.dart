@@ -66,7 +66,7 @@ class DailyWeatherSection extends StatelessWidget {
                                 color: Theme.of(context)
                                     .colorScheme
                                     .onSurface
-                                    .withOpacity(0.6)))
+                                    .withOpacity(0.5)))
                   ]),
                 ),
               ],
