@@ -19,9 +19,12 @@ class SettingsPage extends StatelessWidget {
         padding: EdgeInsets.all(24.0),
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               LocationSettings(),
+              SizedBox(height: 24),
               LanguageSettings(),
+              SizedBox(height: 24),
               PrimaryColorSettings(),
             ],
           ),
