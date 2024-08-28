@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 
 @immutable
 class Settings extends Equatable {
-  final String longitude;
-  final String latitude;
+  final double longitude;
+  final double latitude;
   final String languageCode;
+  // TODO: add primary color variable
   // final ? primaryColor;
 
   const Settings(
