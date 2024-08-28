@@ -15,13 +15,16 @@ class SettingsPage extends StatelessWidget {
         title: const Text('Settings'),
         centerTitle: true,
       ),
-      body: const SingleChildScrollView(
-        child: Column(
-          children: [
-            LocationSettings(),
-            LanguageSettings(),
-            PrimaryColorSettings(),
-          ],
+      body: const Padding(
+        padding: EdgeInsets.all(24.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              LocationSettings(),
+              LanguageSettings(),
+              PrimaryColorSettings(),
+            ],
+          ),
         ),
       ),
     );
