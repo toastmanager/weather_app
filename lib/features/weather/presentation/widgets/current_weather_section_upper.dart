@@ -1,9 +1,11 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:weather_app/core/routes/router.gr.dart';
 import 'package:weather_app/core/utils/weather_icon_mapper.dart';
 import 'package:weather_app/features/weather/presentation/bloc/weather_bloc.dart';
 
@@ -65,7 +67,8 @@ class CurrentWeatherSectionUpper extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         IconButton(
-            onPressed: () {}, icon: const Icon(TablerIcons.settings, size: 40)),
+            onPressed: () => context.pushRoute(const SettingsRoute()),
+            icon: const Icon(TablerIcons.settings, size: 40)),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -84,8 +87,10 @@ class CurrentWeatherSectionUpper extends StatelessWidget {
               TextSpan(
                   text: DateFormat.jm().format(date),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5)
-                  )),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withOpacity(0.5))),
             ])),
           ],
         ),
