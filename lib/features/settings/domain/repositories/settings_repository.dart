@@ -1,11 +1,11 @@
 import 'package:weather_app/features/settings/domain/entities/settings.dart';
 
 abstract class SettingsRepository {
-  void updateLanguageCode();
-  void updateLongitude();
-  void updateLatitude();
+  Future<void> updateLanguageCode();
+  Future<void> updateLongitude();
+  Future<void> updateLatitude();
   // TODO: Add primary color in repository
   // void updatePrimaryColor();
 
-  Future<Settings> getSettings();
+  Settings getSettings();
 }
