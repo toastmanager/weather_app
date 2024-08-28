@@ -3,7 +3,7 @@ import 'package:weather_app/features/settings/data/datasources/local/default_set
 import 'package:weather_app/features/settings/data/datasources/local/preference_keys.dart';
 import 'package:weather_app/features/settings/data/models/settings_model.dart';
 
-abstract class SettingsLocalDatasource {
+abstract class SettingsLocalDataSource {
   Future<void> saveLanguageCode();
   Future<void> saveLongitude();
   Future<void> saveLatitude();
@@ -11,16 +11,16 @@ abstract class SettingsLocalDatasource {
   // void savePrimaryColor();
   Future<void> reset();
 
-  Future<SettingsModel> get();
+  SettingsModel get();
 }
 
-class SettingsLocalDatasourceImpl implements SettingsLocalDatasource {
+class SettingsLocalDatasourceImpl implements SettingsLocalDataSource {
   final SharedPreferences prefs;
 
   const SettingsLocalDatasourceImpl({required this.prefs});
 
   @override
-  Future<SettingsModel> get() async {
+  SettingsModel get() {
     final String? longitude = prefs.getString(PreferenceKeys.longitude);
     final String? latitude = prefs.getString(PreferenceKeys.latitude);
     final String? languageCode = prefs.getString(PreferenceKeys.languageCode);
