@@ -1,5 +1,8 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
+import 'package:weather_app/features/settings/presentation/widgets/language_settings.dart';
+import 'package:weather_app/features/settings/presentation/widgets/location_settings.dart';
+import 'package:weather_app/features/settings/presentation/widgets/primary_color_settings.dart';
 
 @RoutePage()
 class SettingsPage extends StatelessWidget {
@@ -12,7 +15,15 @@ class SettingsPage extends StatelessWidget {
         title: const Text('Settings'),
         centerTitle: true,
       ),
-      body: const Placeholder(),
+      body: const SingleChildScrollView(
+        child: Column(
+          children: [
+            LocationSettings(),
+            LanguageSettings(),
+            PrimaryColorSettings(),
+          ],
+        ),
+      ),
     );
   }
 }
