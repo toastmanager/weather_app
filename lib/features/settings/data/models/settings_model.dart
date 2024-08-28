@@ -20,6 +20,13 @@ class SettingsModel extends Equatable {
         longitude: longitude, latitude: latitude, languageCode: languageCode);
   }
 
+  factory SettingsModel.fromEntity(Settings entity) {
+    return SettingsModel(
+        longitude: entity.longitude,
+        latitude: entity.latitude,
+        languageCode: entity.languageCode);
+  }
+
   @override
   List<Object?> get props => [
         longitude, latitude, languageCode, // primaryColor
