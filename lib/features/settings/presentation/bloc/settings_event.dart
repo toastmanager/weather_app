@@ -8,3 +8,7 @@ sealed class SettingsEvent extends Equatable {
 }
 
 class SettingsGetEvent extends SettingsEvent {}
+
+class SettingsResetEvent extends SettingsEvent {}
+
+class SettingsSaveEvent extends SettingsEvent {}
