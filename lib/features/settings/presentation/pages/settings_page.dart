@@ -20,27 +20,44 @@ class SettingsPage extends StatelessWidget {
           title: const Text('Settings'),
           centerTitle: true,
         ),
-        body: Builder(
-          builder: (context) {
-            context.read<SettingsBloc>().add(SettingsGetEvent());
-            return const Padding(
-              padding: EdgeInsets.all(24.0),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    LocationSettings(),
-                    SizedBox(height: 24),
-                    LanguageSettings(),
-                    SizedBox(height: 24),
-                    PrimaryColorSettings(),
-                  ],
-                ),
+        body: Builder(builder: (context) {
+          context.read<SettingsBloc>().add(SettingsGetEvent());
+          return const Padding(
+            padding: EdgeInsets.all(24.0),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  LocationSettings(),
+                  SizedBox(height: 24),
+                  LanguageSettings(),
+                  SizedBox(height: 24),
+                  PrimaryColorSettings(),
+                  SizedBox(height: 24),
+                  SettingsPageActions()
+                ],
               ),
-            );
-          }
-        ),
+            ),
+          );
+        }),
       ),
+    );
+  }
+}
+
+class SettingsPageActions extends StatelessWidget {
+  const SettingsPageActions({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(child: FilledButton(onPressed: () {}, child: const Text('Save'))),
+        const SizedBox(width: 24),
+        Expanded(child: OutlinedButton(onPressed: () {}, child: const Text('Reset'))),
+      ],
     );
   }
 }

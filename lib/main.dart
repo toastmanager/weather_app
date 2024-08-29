@@ -25,6 +25,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+        filledButtonTheme: const FilledButtonThemeData(
+          style: ButtonStyle(
+            padding: WidgetStatePropertyAll(EdgeInsets.fromLTRB(20, 16, 20, 16))
+          )
+        ),
+        outlinedButtonTheme: const OutlinedButtonThemeData(
+          style: ButtonStyle(
+            padding: WidgetStatePropertyAll(EdgeInsets.fromLTRB(20, 16, 20, 16))
+          )
+        ),
         textTheme: Theme.of(context).textTheme.apply(
               fontSizeDelta: 2,
               fontFamily: GoogleFonts.onest().fontFamily,
