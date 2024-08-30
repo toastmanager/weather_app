@@ -20,6 +20,11 @@ class SettingsPage extends StatelessWidget {
           title: const Text('Settings'),
           centerTitle: true,
         ),
+        bottomNavigationBar: const Padding(
+          padding: EdgeInsets.only(left: 24, right: 24, bottom: 24),
+          child: SettingsPageActions(),
+        ),
+        // floatingActionButton: const Expanded(child: ),
         body: Builder(builder: (context) {
           context.read<SettingsBloc>().add(SettingsGetEvent());
           return const Padding(
@@ -33,8 +38,6 @@ class SettingsPage extends StatelessWidget {
                   LanguageSettings(),
                   SizedBox(height: 24),
                   PrimaryColorSettings(),
-                  SizedBox(height: 24),
-                  SettingsPageActions()
                 ],
               ),
             ),
@@ -54,9 +57,15 @@ class SettingsPageActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(child: FilledButton(onPressed: () {}, child: const Text('Save'))),
+        Expanded(
+            child: FilledButton(
+                onPressed: () =>
+                    locator<SettingsBloc>().add(SettingsResetEvent()),
+                child: const Text('Save'))),
         const SizedBox(width: 24),
-        Expanded(child: OutlinedButton(onPressed: () {}, child: const Text('Reset'))),
+        Expanded(
+            child:
+                OutlinedButton(onPressed: () {}, child: const Text('Reset'))),
       ],
     );
   }

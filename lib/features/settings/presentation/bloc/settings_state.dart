@@ -9,16 +9,16 @@ sealed class SettingsState extends Equatable {
 
 final class SettingsInitial extends SettingsState {}
 
-class SettingsGetFailedState extends SettingsState {
+class SettingsFailedState extends SettingsState {
   final String message;
 
-  const SettingsGetFailedState({required this.message});
+  const SettingsFailedState({required this.message});
 }
 
-class SettingsUpdatingState extends SettingsState {}
+class SettingsLoadingState extends SettingsState {}
 
-class SettingsGetSuccessState extends SettingsState {
+class SettingsLoadedState extends SettingsState {
   final Settings settings;
 
-  const SettingsGetSuccessState({required this.settings});
+  const SettingsLoadedState({required this.settings});
 }

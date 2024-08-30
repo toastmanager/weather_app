@@ -13,20 +13,12 @@ class SettingsRepositoryImpl extends SettingsRepository {
   }
   
   @override
-  Future<void> updateLanguageCode() {
-    // TODO: implement updateLanguageCode
-    throw UnimplementedError();
+  Future<void> resetSettings() {
+    return settingsLocalDataSource.reset();
   }
   
   @override
-  Future<void> updateLatitude() {
-    // TODO: implement updateLatitude
-    throw UnimplementedError();
-  }
-  
-  @override
-  Future<void> updateLongitude() {
-    // TODO: implement updateLongitude
+  Future<void> saveSettigns() {
     throw UnimplementedError();
   }
 }

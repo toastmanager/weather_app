@@ -4,4 +4,6 @@ class ResetSettings {
   final SettingsRepository repository;
 
   ResetSettings({required this.repository});
+
+  Future<void> execute() => repository.resetSettings();
 }

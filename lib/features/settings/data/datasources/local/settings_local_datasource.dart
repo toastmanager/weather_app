@@ -4,13 +4,8 @@ import 'package:weather_app/features/settings/data/datasources/local/settings_pr
 import 'package:weather_app/features/settings/data/models/settings_model.dart';
 
 abstract class SettingsLocalDataSource {
-  Future<void> saveLanguageCode();
-  Future<void> saveLongitude();
-  Future<void> saveLatitude();
-  // TODO: Add primary color in repository
-  // void savePrimaryColor();
+  Future<void> save();
   Future<void> reset();
-
   SettingsModel get();
 }
 
@@ -36,23 +31,15 @@ class SettingsLocalDatasourceImpl implements SettingsLocalDataSource {
   }
 
   @override
-  Future<void> saveLanguageCode() async {
-    // TODO: implement updateLanguageCode
+  Future<void> reset() async {
+    await prefs.setString(SettingsPreferenceKeys.longitude, defaultSettings.longitude.toString());
+    await prefs.setString(SettingsPreferenceKeys.latitude, defaultSettings.latitude.toString());
+    await prefs.setString(SettingsPreferenceKeys.languageCode, defaultSettings.languageCode);
   }
-
+  
   @override
-  Future<void> saveLatitude() async {
-    // TODO: implement updateLatitude
-  }
-
-  @override
-  Future<void> saveLongitude() async {
-    // TODO: implement updateLongitude
-  }
-
-  @override
-  Future<void> reset() {
-    // TODO: implement reset
+  Future<void> save() {
+    // TODO: implement save
     throw UnimplementedError();
   }
 }

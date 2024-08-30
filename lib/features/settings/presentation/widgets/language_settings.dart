@@ -37,7 +37,7 @@ class _LanguageSettingsState extends State<LanguageSettings> {
   Widget build(BuildContext context) {
     return BlocListener<SettingsBloc, SettingsState>(
       listener: (context, state) {
-        if (state is SettingsGetSuccessState) {
+        if (state is SettingsLoadedState) {
           _controller.text = state.settings.languageCode;
         }
         return;

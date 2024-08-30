@@ -13,7 +13,8 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   final SaveSettings saveSettings;
   final ResetSettings resetSettings;
 
-  SettingsBloc(this.getSettings, this.saveSettings, this.resetSettings) : super(SettingsInitial()) {
+  SettingsBloc(this.getSettings, this.saveSettings, this.resetSettings)
+      : super(SettingsInitial()) {
     on<SettingsGetEvent>(_getSettings);
     on<SettingsResetEvent>(_resetSettings);
     on<SettingsSaveEvent>(_saveSettings);
@@ -22,13 +23,23 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   void _getSettings(SettingsGetEvent event, Emitter<SettingsState> emit) {
     try {
       final settings = getSettings.execute();
-      emit(SettingsGetSuccessState(settings: settings));
+      emit(SettingsLoadedState(settings: settings));
     } catch (e) {
       rethrow;
     }
   }
 
-  void _resetSettings(SettingsResetEvent event, Emitter<SettingsState> emit) {}
+  void _resetSettings(
+      SettingsResetEvent event, Emitter<SettingsState> emit) async {
+    try {
+      emit(SettingsLoadingState());
+      await resetSettings.execute();
+      final settings = getSettings.execute();
+      emit(SettingsLoadedState(settings: settings));
+    } catch (e) {
+      rethrow;
+    }
+  }
 
   void _saveSettings(SettingsSaveEvent event, Emitter<SettingsState> emit) {}
 }
