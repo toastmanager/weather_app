@@ -55,7 +55,7 @@ class SettingsPageActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = locator<SettingsBloc>();
+    final bloc = context.read<SettingsBloc>();
     return Row(
       children: [
         Expanded(

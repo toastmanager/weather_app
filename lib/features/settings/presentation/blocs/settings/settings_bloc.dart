@@ -22,40 +22,20 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     required this.resetSettings,
   }) : super(SettingsInitial()) {
     on<SettingsLoadEvent>(_onLoadSettings);
-    on<SettingsSaveEvent>(_onSaveSettings);
-    on<SettingsResetEvent>(_onResetSettings);
     on<UpdateLongitude>(_onUpdateLongitude);
     on<UpdateLatitude>(_onUpdateLatitude);
+    on<SettingsSaveEvent>(_onSaveSettings);
+    on<SettingsResetEvent>(_onResetSettings);
   }
 
   void _onLoadSettings(SettingsLoadEvent event, Emitter<SettingsState> emit) {
     emit(SettingsLoading());
     try {
-      final settings = getSettings.execute();
-      emit(SettingsLoaded(settings: settings));
-    } catch (e) {
-      emit(const SettingsError(message: 'Failed to load settings'));
-    }
-  }
-
-  Future<void> _onSaveSettings(SettingsSaveEvent event, Emitter<SettingsState> emit) async {
-    emit(SettingsLoading());
-    try {
-      await saveSettings.execute(_currentSettings!);
+      _currentSettings = getSettings.execute();
       emit(SettingsLoaded(settings: _currentSettings!));
     } catch (e) {
-      emit(const SettingsError(message: 'Failed to save settings'));
-    }
-  }
-
-  Future<void> _onResetSettings(SettingsResetEvent event, Emitter<SettingsState> emit) async {
-    emit(SettingsLoading());
-    try {
-      await resetSettings.execute();
-      final resetSettingsData = getSettings.execute();
-      emit(SettingsLoaded(settings: resetSettingsData));
-    } catch (e) {
-      emit(const SettingsError(message: 'Failed to reset settings'));
+      emit(const SettingsError(message: 'Failed to load settings'));
+      rethrow;
     }
   }
 
@@ -70,6 +50,31 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     if (_currentSettings != null) {
       _currentSettings = _currentSettings!.copyWith(latitude: event.latitude);
       emit(SettingsLoaded(settings: _currentSettings!));
+    }
+  }
+
+  Future<void> _onSaveSettings(
+      SettingsSaveEvent event, Emitter<SettingsState> emit) async {
+    emit(SettingsLoading());
+    try {
+      await saveSettings.execute(_currentSettings!);
+      emit(SettingsLoaded(settings: _currentSettings!));
+    } catch (e) {
+      emit(const SettingsError(message: 'Failed to save settings'));
+      rethrow;
+    }
+  }
+
+  Future<void> _onResetSettings(
+      SettingsResetEvent event, Emitter<SettingsState> emit) async {
+    emit(SettingsLoading());
+    try {
+      await resetSettings.execute();
+      _currentSettings = getSettings.execute();
+      emit(SettingsLoaded(settings: _currentSettings!));
+    } catch (e) {
+      emit(const SettingsError(message: 'Failed to reset settings'));
+      rethrow;
     }
   }
 }

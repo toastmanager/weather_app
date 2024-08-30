@@ -20,14 +20,10 @@ class SettingsLocalDatasourceImpl implements SettingsLocalDataSource {
     final String? latitude = prefs.getString(SettingsPreferenceKeys.latitude);
     final String? languageCode = prefs.getString(SettingsPreferenceKeys.languageCode);
 
-    if (longitude == null || latitude == null || languageCode == null) {
-      return defaultSettings;
-    }
-
     return SettingsModel(
-        longitude: double.parse(longitude),
-        latitude: double.parse(latitude),
-        languageCode: languageCode);
+        longitude: longitude == null ? double.parse(longitude!) : defaultSettings.longitude,
+        latitude: latitude == null ? double.parse(latitude!) : defaultSettings.latitude,
+        languageCode: languageCode ?? defaultSettings.languageCode);
   }
 
   @override

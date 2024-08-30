@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/features/settings/presentation/blocs/settings/settings_bloc.dart';
-import 'package:weather_app/injection.dart';
 
 class LocationSettings extends StatefulWidget {
   const LocationSettings({super.key});
@@ -30,15 +29,18 @@ class _LocationSettingsState extends State<LocationSettings> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<SettingsBloc, SettingsState>(
-      listener: (context, state) {
-        if (state is SettingsLoaded) {
-          latitudeController.text = state.settings.latitude.toString();
-          longitudeController.text = state.settings.longitude.toString();
-        }
-        return;
-      },
-      child: Column(
+    return BlocConsumer<SettingsBloc, SettingsState>(
+        listener: (context, state) {
+      if (state is SettingsLoaded) {
+        longitudeController.text = state.settings.longitude.toString();
+        latitudeController.text = state.settings.latitude.toString();
+      }
+    }, builder: (context, state) {
+      final bloc = context.read<SettingsBloc>();
+      if (state is SettingsLoading) {
+        return const CircularProgressIndicator();
+      }
+      return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
@@ -58,7 +60,7 @@ class _LocationSettingsState extends State<LocationSettings> {
             controller: latitudeController,
             onChanged: (value) {
               final latitude = double.tryParse(value) ?? 0.0;
-              locator<SettingsBloc>().add(UpdateLatitude(latitude: latitude));
+              bloc.add(UpdateLatitude(latitude: latitude));
             },
           ),
           const SizedBox(
@@ -71,12 +73,11 @@ class _LocationSettingsState extends State<LocationSettings> {
             controller: longitudeController,
             onChanged: (value) {
               final longitude = double.tryParse(value) ?? 0.0;
-              locator<SettingsBloc>()
-                  .add(UpdateLongitude(longitude: longitude));
+              bloc.add(UpdateLongitude(longitude: longitude));
             },
           ),
         ],
-      ),
-    );
+      );
+    });
   }
 }

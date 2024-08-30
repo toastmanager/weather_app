@@ -20,6 +20,6 @@ class SettingsRepositoryImpl extends SettingsRepository {
   
   @override
   Future<void> saveSettigns(Settings settings) {
-    throw settingsLocalDataSource.save(SettingsModel.fromEntity(settings));
+    return settingsLocalDataSource.save(SettingsModel.fromEntity(settings));
   }
 }
