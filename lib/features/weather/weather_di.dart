@@ -12,9 +12,7 @@ Future<void> weatherDIInit() async {
   locator.registerLazySingleton(() => FetchWeather(repository: locator()));
 
   locator.registerLazySingleton<WeatherRepository>(() => WeatherRepositoryImpl(
-      weatherRemoteDataSource: locator(),
-      latitude: 52.52,
-      longitude: 13.419998));
+      weatherRemoteDataSource: locator()));
 
   locator.registerLazySingleton<WeatherRemoteDataSource>(
     () => WeatherRemoteDataSourceImpl(client: locator())

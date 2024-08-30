@@ -4,20 +4,16 @@ import 'package:weather_app/features/weather/domain/entities/weather.dart';
 import 'package:weather_app/features/weather/domain/repositories/weather_repository.dart';
 
 class WeatherRepositoryImpl implements WeatherRepository {
-  final double latitude;
-  final double longitude;
   final WeatherRemoteDataSource weatherRemoteDataSource;
 
   const WeatherRepositoryImpl(
-      {required this.weatherRemoteDataSource,
-      required this.latitude,
-      required this.longitude});
+      {required this.weatherRemoteDataSource});
 
   @override
   Future<Weather> fetchWeather() async {
     try {
       final WeatherModel weatherModel =
-          await weatherRemoteDataSource.get(latitude, longitude);
+          await weatherRemoteDataSource.get();
       return weatherModel.toEntity();
     } catch (e) {
       rethrow;
