@@ -1,18 +1,33 @@
 part of 'settings_bloc.dart';
 
-sealed class SettingsEvent extends Equatable {
+@immutable
+abstract class SettingsEvent extends Equatable {
   const SettingsEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
-class SettingsGetEvent extends SettingsEvent {}
+class SettingsLoadEvent extends SettingsEvent {}
+
+class SettingsSaveEvent extends SettingsEvent {}
 
 class SettingsResetEvent extends SettingsEvent {}
 
-class SettingsSaveEvent extends SettingsEvent {
-  final Settings settings;
+class UpdateLongitude extends SettingsEvent {
+  final double longitude;
 
-  const SettingsSaveEvent({required this.settings});
+  const UpdateLongitude({required this.longitude});
+
+  @override
+  List<Object?> get props => [longitude];
+}
+
+class UpdateLatitude extends SettingsEvent {
+  final double latitude;
+
+  const UpdateLatitude({required this.latitude});
+
+  @override
+  List<Object?> get props => [latitude];
 }

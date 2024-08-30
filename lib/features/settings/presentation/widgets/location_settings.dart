@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/features/settings/presentation/blocs/settings/settings_bloc.dart';
+import 'package:weather_app/injection.dart';
 
 class LocationSettings extends StatefulWidget {
   const LocationSettings({super.key});
@@ -31,42 +32,51 @@ class _LocationSettingsState extends State<LocationSettings> {
   Widget build(BuildContext context) {
     return BlocListener<SettingsBloc, SettingsState>(
       listener: (context, state) {
-        if (!state.isLoading) {
-          latitudeController.text = state.settings!.latitude.toString();
-          longitudeController.text = state.settings!.longitude.toString();
+        if (state is SettingsLoaded) {
+          latitudeController.text = state.settings.latitude.toString();
+          longitudeController.text = state.settings.longitude.toString();
         }
         return;
       },
       child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Location',
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge
-                  ?.copyWith(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            TextField(
-              decoration: const InputDecoration(
-                  border: OutlineInputBorder(), label: Text('Latitude')),
-              keyboardType: TextInputType.number,
-              controller: latitudeController,
-            ),
-            const SizedBox(
-              height: 12,
-            ),
-            TextField(
-              decoration: const InputDecoration(
-                  border: OutlineInputBorder(), label: Text('Longitude')),
-              keyboardType: TextInputType.number,
-              controller: longitudeController,
-            ),
-          ],
-        ),
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Location',
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge
+                ?.copyWith(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(
+            height: 24,
+          ),
+          TextField(
+            decoration: const InputDecoration(
+                border: OutlineInputBorder(), label: Text('Latitude')),
+            keyboardType: TextInputType.number,
+            controller: latitudeController,
+            onChanged: (value) {
+              final latitude = double.tryParse(value) ?? 0.0;
+              locator<SettingsBloc>().add(UpdateLatitude(latitude: latitude));
+            },
+          ),
+          const SizedBox(
+            height: 12,
+          ),
+          TextField(
+            decoration: const InputDecoration(
+                border: OutlineInputBorder(), label: Text('Longitude')),
+            keyboardType: TextInputType.number,
+            controller: longitudeController,
+            onChanged: (value) {
+              final longitude = double.tryParse(value) ?? 0.0;
+              locator<SettingsBloc>()
+                  .add(UpdateLongitude(longitude: longitude));
+            },
+          ),
+        ],
+      ),
     );
   }
 }

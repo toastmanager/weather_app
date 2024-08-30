@@ -26,7 +26,7 @@ class SettingsPage extends StatelessWidget {
         ),
         // floatingActionButton: const Expanded(child: ),
         body: Builder(builder: (context) {
-          context.read<SettingsBloc>().add(SettingsGetEvent());
+          context.read<SettingsBloc>().add(SettingsLoadEvent());
           return const Padding(
             padding: EdgeInsets.all(24.0),
             child: SingleChildScrollView(
@@ -55,15 +55,18 @@ class SettingsPageActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = locator<SettingsBloc>();
     return Row(
       children: [
         Expanded(
-            child: FilledButton(onPressed: () {}, child: const Text('Save'))),
+            child: FilledButton(
+                onPressed: () =>
+                    bloc.add(SettingsSaveEvent()),
+                child: const Text('Save'))),
         const SizedBox(width: 24),
         Expanded(
             child: OutlinedButton(
-                onPressed: () =>
-                    locator<SettingsBloc>().add(SettingsResetEvent()),
+                onPressed: () => bloc.add(SettingsResetEvent()),
                 child: const Text('Reset'))),
       ],
     );

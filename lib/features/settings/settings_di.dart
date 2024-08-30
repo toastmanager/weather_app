@@ -9,8 +9,10 @@ import 'package:weather_app/features/settings/presentation/blocs/settings/settin
 import 'package:weather_app/injection.dart';
 
 Future<void> settingsDIInit() async {
-  locator.registerFactory<SettingsBloc>(
-      () => SettingsBloc(locator<GetSettings>(), locator<SaveSettings>(), locator<ResetSettings>()));
+  locator.registerFactory<SettingsBloc>(() => SettingsBloc(
+      getSettings: locator<GetSettings>(),
+      saveSettings: locator<SaveSettings>(),
+      resetSettings: locator<ResetSettings>()));
 
   locator.registerLazySingleton<GetSettings>(
       () => GetSettings(repository: locator<SettingsRepository>()));

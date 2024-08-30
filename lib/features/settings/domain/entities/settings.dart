@@ -14,6 +14,17 @@ class Settings extends Equatable {
       required this.latitude,
       required this.languageCode});
 
+  Settings copyWith({
+    double? longitude,
+    double? latitude,
+    String? languageCode,
+  }) {
+    return Settings(
+        longitude: longitude ?? this.longitude,
+        latitude: latitude ?? this.latitude,
+        languageCode: languageCode ?? this.languageCode);
+  }
+
   @override
   List<Object?> get props => [
         longitude, latitude, languageCode, // primaryColor

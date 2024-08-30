@@ -1,31 +1,33 @@
 part of 'settings_bloc.dart';
 
-class SettingsState extends Equatable {
-  final Settings? settings;
-  final bool isFailed;
-  final bool isLoading;
-  final String? errorMessage;
-
-  const SettingsState(
-      {this.settings,
-      this.isFailed = false,
-      this.isLoading = false,
-      this.errorMessage});
-
-  SettingsState copyWith({
-    Settings? settings,
-    bool isFailed = false,
-    bool isLoading = false,
-    String? errorMessage,
-  }) {
-    return SettingsState(
-      settings: settings ?? this.settings,
-      isFailed: isFailed,
-      isLoading: isLoading,
-      errorMessage: errorMessage ?? this.errorMessage,
-    );
-  }
+@immutable
+abstract class SettingsState extends Equatable {
+  const SettingsState();
 
   @override
-  List<Object?> get props => [settings, isFailed, isLoading, errorMessage];
+  List<Object?> get props => [];
 }
+
+class SettingsInitial extends SettingsState {}
+
+class SettingsLoading extends SettingsState {}
+
+class SettingsLoaded extends SettingsState {
+  final Settings settings;
+
+  const SettingsLoaded({required this.settings});
+
+  @override
+  List<Object?> get props => [settings];
+}
+
+class SettingsError extends SettingsState {
+  final String message;
+
+  const SettingsError({required this.message});
+
+  @override
+  List<Object?> get props => [message];
+}
+
+class SettingsReset extends SettingsState {}
