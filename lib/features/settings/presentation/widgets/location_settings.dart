@@ -29,16 +29,11 @@ class _LocationSettingsState extends State<LocationSettings> {
 
   @override
   Widget build(BuildContext context) {
-    bool isLoading = false;
     return BlocListener<SettingsBloc, SettingsState>(
       listener: (context, state) {
         if (state is SettingsLoadedState) {
-          isLoading = false;
           latitudeController.text = state.settings.latitude.toString();
           longitudeController.text = state.settings.longitude.toString();
-        }
-        if (state is SettingsLoadingState) {
-          isLoading = true;
         }
         return;
       },
@@ -60,7 +55,6 @@ class _LocationSettingsState extends State<LocationSettings> {
                   border: OutlineInputBorder(), label: Text('Latitude')),
               keyboardType: TextInputType.number,
               controller: latitudeController,
-              enabled: !isLoading,
             ),
             const SizedBox(
               height: 12,
@@ -70,7 +64,6 @@ class _LocationSettingsState extends State<LocationSettings> {
                   border: OutlineInputBorder(), label: Text('Longitude')),
               keyboardType: TextInputType.number,
               controller: longitudeController,
-              enabled: !isLoading,
             ),
           ],
         ),
