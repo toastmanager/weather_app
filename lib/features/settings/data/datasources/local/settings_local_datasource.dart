@@ -17,9 +17,10 @@ class SettingsLocalDatasourceImpl implements SettingsLocalDataSource {
 
   @override
   SettingsModel get() {
-    final SettingsModel settings = settingsBox.get(1) ?? defaultSettings;
+    SettingsModel? settings = settingsBox.get(1);
+    settings ??= settingsBox.get(settingsBox.put(defaultSettings));
 
-    return settings;
+    return settings!;
   }
 
   @override

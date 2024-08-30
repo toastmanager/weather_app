@@ -59,7 +59,7 @@ class _LocationSettingsState extends State<LocationSettings> {
                 border: OutlineInputBorder(), label: Text('Latitude')),
             keyboardType: TextInputType.number,
             controller: latitudeController,
-            onChanged: (value) {
+            onSubmitted: (value) {
               final latitude = double.tryParse(value) ?? 0.0;
               bloc.add(UpdateLatitude(latitude: latitude));
             },
@@ -72,7 +72,7 @@ class _LocationSettingsState extends State<LocationSettings> {
                 border: OutlineInputBorder(), label: Text('Longitude')),
             keyboardType: TextInputType.number,
             controller: longitudeController,
-            onChanged: (value) {
+            onSubmitted: (value) {
               final longitude = double.tryParse(value) ?? 0.0;
               bloc.add(UpdateLongitude(longitude: longitude));
             },
