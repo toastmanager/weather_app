@@ -32,13 +32,15 @@ class SettingsLocalDatasourceImpl implements SettingsLocalDataSource {
 
   @override
   Future<void> reset() async {
-    await prefs.setString(SettingsPreferenceKeys.longitude, defaultSettings.longitude.toString());
-    await prefs.setString(SettingsPreferenceKeys.latitude, defaultSettings.latitude.toString());
-    await prefs.setString(SettingsPreferenceKeys.languageCode, defaultSettings.languageCode);
+    _save(defaultSettings);
   }
   
   @override
   Future<void> save(SettingsModel settings) async {
+    _save(settings);
+  }
+
+  Future<void> _save(SettingsModel settings) async {
     await prefs.setString(SettingsPreferenceKeys.longitude, settings.longitude.toString());
     await prefs.setString(SettingsPreferenceKeys.latitude, settings.latitude.toString());
     await prefs.setString(SettingsPreferenceKeys.languageCode, settings.languageCode);
