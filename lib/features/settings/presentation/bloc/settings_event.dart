@@ -11,4 +11,8 @@ class SettingsGetEvent extends SettingsEvent {}
 
 class SettingsResetEvent extends SettingsEvent {}
 
-class SettingsSaveEvent extends SettingsEvent {}
+class SettingsSaveEvent extends SettingsEvent {
+  final Settings settings;
+
+  const SettingsSaveEvent({required this.settings});
+}

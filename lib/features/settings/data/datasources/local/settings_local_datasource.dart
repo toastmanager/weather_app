@@ -4,7 +4,7 @@ import 'package:weather_app/features/settings/data/datasources/local/settings_pr
 import 'package:weather_app/features/settings/data/models/settings_model.dart';
 
 abstract class SettingsLocalDataSource {
-  Future<void> save();
+  Future<void> save(SettingsModel settings);
   Future<void> reset();
   SettingsModel get();
 }
@@ -38,8 +38,9 @@ class SettingsLocalDatasourceImpl implements SettingsLocalDataSource {
   }
   
   @override
-  Future<void> save() {
-    // TODO: implement save
-    throw UnimplementedError();
+  Future<void> save(SettingsModel settings) async {
+    await prefs.setString(SettingsPreferenceKeys.longitude, settings.longitude.toString());
+    await prefs.setString(SettingsPreferenceKeys.latitude, settings.latitude.toString());
+    await prefs.setString(SettingsPreferenceKeys.languageCode, settings.languageCode);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:weather_app/features/settings/data/datasources/local/settings_local_datasource.dart';
+import 'package:weather_app/features/settings/data/models/settings_model.dart';
 import 'package:weather_app/features/settings/domain/entities/settings.dart';
 import 'package:weather_app/features/settings/domain/repositories/settings_repository.dart';
 
@@ -18,7 +19,7 @@ class SettingsRepositoryImpl extends SettingsRepository {
   }
   
   @override
-  Future<void> saveSettigns() {
-    throw UnimplementedError();
+  Future<void> saveSettigns(Settings settings) {
+    throw settingsLocalDataSource.save(SettingsModel.fromEntity(settings));
   }
 }

@@ -41,5 +41,12 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     }
   }
 
-  void _saveSettings(SettingsSaveEvent event, Emitter<SettingsState> emit) {}
+  void _saveSettings(SettingsSaveEvent event, Emitter<SettingsState> emit) async {
+    try {
+      emit(SettingsLoadingState());
+      await saveSettings.execute(event.settings);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

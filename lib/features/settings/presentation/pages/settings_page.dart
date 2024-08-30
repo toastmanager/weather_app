@@ -58,14 +58,13 @@ class SettingsPageActions extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-            child: FilledButton(
-                onPressed: () =>
-                    locator<SettingsBloc>().add(SettingsResetEvent()),
-                child: const Text('Save'))),
+            child: FilledButton(onPressed: () {}, child: const Text('Save'))),
         const SizedBox(width: 24),
         Expanded(
-            child:
-                OutlinedButton(onPressed: () {}, child: const Text('Reset'))),
+            child: OutlinedButton(
+                onPressed: () =>
+                    locator<SettingsBloc>().add(SettingsResetEvent()),
+                child: const Text('Reset'))),
       ],
     );
   }
