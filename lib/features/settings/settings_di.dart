@@ -5,7 +5,7 @@ import 'package:weather_app/features/settings/domain/repositories/settings_repos
 import 'package:weather_app/features/settings/domain/usecases/get_settings.dart';
 import 'package:weather_app/features/settings/domain/usecases/reset_settings.dart';
 import 'package:weather_app/features/settings/domain/usecases/save_settings.dart';
-import 'package:weather_app/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:weather_app/features/settings/presentation/blocs/settings/settings_bloc.dart';
 import 'package:weather_app/injection.dart';
 
 Future<void> settingsDIInit() async {

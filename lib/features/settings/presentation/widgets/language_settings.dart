@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_app/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:weather_app/features/settings/presentation/blocs/settings/settings_bloc.dart';
 
 enum LanguageLabel {
   english('English', 'en'),
@@ -37,8 +37,8 @@ class _LanguageSettingsState extends State<LanguageSettings> {
   Widget build(BuildContext context) {
     return BlocListener<SettingsBloc, SettingsState>(
       listener: (context, state) {
-        if (state is SettingsLoadedState) {
-          _controller.text = state.settings.languageCode;
+        if (!state.isLoading) {
+          _controller.text = state.settings!.languageCode;
         }
         return;
       },

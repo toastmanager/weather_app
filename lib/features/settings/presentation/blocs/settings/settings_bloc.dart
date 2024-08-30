@@ -9,12 +9,13 @@ part 'settings_event.dart';
 part 'settings_state.dart';
 
 class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
+  // Usecases
   final GetSettings getSettings;
   final SaveSettings saveSettings;
   final ResetSettings resetSettings;
 
   SettingsBloc(this.getSettings, this.saveSettings, this.resetSettings)
-      : super(SettingsInitial()) {
+      : super(const SettingsState()) {
     on<SettingsGetEvent>(_getSettings);
     on<SettingsResetEvent>(_resetSettings);
     on<SettingsSaveEvent>(_saveSettings);
@@ -23,7 +24,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   void _getSettings(SettingsGetEvent event, Emitter<SettingsState> emit) {
     try {
       final settings = getSettings.execute();
-      emit(SettingsLoadedState(settings: settings));
+      emit(state.copyWith(settings: settings));
     } catch (e) {
       rethrow;
     }
@@ -32,10 +33,10 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   void _resetSettings(
       SettingsResetEvent event, Emitter<SettingsState> emit) async {
     try {
-      emit(SettingsLoadingState());
+      emit(state.copyWith(isLoading: true));
       await resetSettings.execute();
       final settings = getSettings.execute();
-      emit(SettingsLoadedState(settings: settings));
+      emit(state.copyWith(settings: settings));
     } catch (e) {
       rethrow;
     }
@@ -43,8 +44,9 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
   void _saveSettings(SettingsSaveEvent event, Emitter<SettingsState> emit) async {
     try {
-      emit(SettingsLoadingState());
+      emit(state.copyWith(isLoading: true));
       await saveSettings.execute(event.settings);
+      emit(state.copyWith(isLoading: false));
     } catch (e) {
       rethrow;
     }

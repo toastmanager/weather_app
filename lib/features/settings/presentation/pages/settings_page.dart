@@ -1,7 +1,7 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_app/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:weather_app/features/settings/presentation/blocs/settings/settings_bloc.dart';
 import 'package:weather_app/features/settings/presentation/widgets/language_settings.dart';
 import 'package:weather_app/features/settings/presentation/widgets/location_settings.dart';
 import 'package:weather_app/features/settings/presentation/widgets/primary_color_settings.dart';

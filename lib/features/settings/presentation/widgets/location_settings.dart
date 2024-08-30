@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_app/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:weather_app/features/settings/presentation/blocs/settings/settings_bloc.dart';
 
 class LocationSettings extends StatefulWidget {
   const LocationSettings({super.key});
@@ -31,9 +31,9 @@ class _LocationSettingsState extends State<LocationSettings> {
   Widget build(BuildContext context) {
     return BlocListener<SettingsBloc, SettingsState>(
       listener: (context, state) {
-        if (state is SettingsLoadedState) {
-          latitudeController.text = state.settings.latitude.toString();
-          longitudeController.text = state.settings.longitude.toString();
+        if (!state.isLoading) {
+          latitudeController.text = state.settings!.latitude.toString();
+          longitudeController.text = state.settings!.longitude.toString();
         }
         return;
       },
