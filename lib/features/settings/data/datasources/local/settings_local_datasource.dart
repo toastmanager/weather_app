@@ -1,44 +1,34 @@
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:objectbox/objectbox.dart';
 import 'package:weather_app/features/settings/data/datasources/local/default_settings.dart';
-import 'package:weather_app/features/settings/data/datasources/local/settings_preference_keys.dart';
 import 'package:weather_app/features/settings/data/models/settings_model.dart';
+import 'package:weather_app/objectbox.dart';
 
 abstract class SettingsLocalDataSource {
-  Future<void> save(SettingsModel settings);
-  Future<void> reset();
+  void save(SettingsModel settings);
+  void reset();
   SettingsModel get();
 }
 
 class SettingsLocalDatasourceImpl implements SettingsLocalDataSource {
-  final SharedPreferences prefs;
+  final ObjectBox objectBox;
+  final Box<SettingsModel> settingsBox;
 
-  const SettingsLocalDatasourceImpl({required this.prefs});
+  const SettingsLocalDatasourceImpl({required this.objectBox, required this.settingsBox});
 
   @override
   SettingsModel get() {
-    final String? longitude = prefs.getString(SettingsPreferenceKeys.longitude);
-    final String? latitude = prefs.getString(SettingsPreferenceKeys.latitude);
-    final String? languageCode = prefs.getString(SettingsPreferenceKeys.languageCode);
+    final SettingsModel settings = settingsBox.get(1) ?? defaultSettings;
 
-    return SettingsModel(
-        longitude: longitude == null ? double.parse(longitude!) : defaultSettings.longitude,
-        latitude: latitude == null ? double.parse(latitude!) : defaultSettings.latitude,
-        languageCode: languageCode ?? defaultSettings.languageCode);
+    return settings;
   }
 
   @override
-  Future<void> reset() async {
-    _save(defaultSettings);
+  void reset() async {
+    settingsBox.put(defaultSettings);
   }
   
   @override
-  Future<void> save(SettingsModel settings) async {
-    _save(settings);
-  }
-
-  Future<void> _save(SettingsModel settings) async {
-    await prefs.setString(SettingsPreferenceKeys.longitude, settings.longitude.toString());
-    await prefs.setString(SettingsPreferenceKeys.latitude, settings.latitude.toString());
-    await prefs.setString(SettingsPreferenceKeys.languageCode, settings.languageCode);
+  void save(SettingsModel settings) async {
+    settingsBox.put(settings);
   }
 }

@@ -1,27 +1,35 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
+import 'package:objectbox/objectbox.dart';
 import 'package:weather_app/features/settings/domain/entities/settings.dart';
 
-@immutable
+@Entity()
+// ignore: must_be_immutable
 class SettingsModel extends Equatable {
+  @Id()
+  int id;
   final double longitude;
   final double latitude;
   final String languageCode;
   // TODO: add primary color variable
   // final ? primaryColor;
 
-  const SettingsModel(
-      {required this.longitude,
+  SettingsModel(
+      {this.id = 0,
+      required this.longitude,
       required this.latitude,
       required this.languageCode});
 
   Settings toEntity() {
     return Settings(
-        longitude: longitude, latitude: latitude, languageCode: languageCode);
+        id: id,
+        longitude: longitude,
+        latitude: latitude,
+        languageCode: languageCode);
   }
 
   factory SettingsModel.fromEntity(Settings entity) {
     return SettingsModel(
+      id: entity.id,
         longitude: entity.longitude,
         latitude: entity.latitude,
         languageCode: entity.languageCode);
@@ -29,6 +37,6 @@ class SettingsModel extends Equatable {
 
   @override
   List<Object?> get props => [
-        longitude, latitude, languageCode, // primaryColor
+        id, longitude, latitude, languageCode, // primaryColor
       ];
 }

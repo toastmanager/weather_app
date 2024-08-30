@@ -14,12 +14,12 @@ class SettingsRepositoryImpl extends SettingsRepository {
   }
   
   @override
-  Future<void> resetSettings() {
+  void resetSettings() {
     return settingsLocalDataSource.reset();
   }
   
   @override
-  Future<void> saveSettigns(Settings settings) {
+  void saveSettigns(Settings settings) {
     return settingsLocalDataSource.save(SettingsModel.fromEntity(settings));
   }
 }

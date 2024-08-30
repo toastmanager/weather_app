@@ -57,7 +57,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       SettingsSaveEvent event, Emitter<SettingsState> emit) async {
     emit(SettingsLoading());
     try {
-      await saveSettings.execute(_currentSettings!);
+      saveSettings.execute(_currentSettings!);
       emit(SettingsLoaded(settings: _currentSettings!));
     } catch (e) {
       emit(const SettingsError(message: 'Failed to save settings'));
@@ -69,7 +69,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       SettingsResetEvent event, Emitter<SettingsState> emit) async {
     emit(SettingsLoading());
     try {
-      await resetSettings.execute();
+      resetSettings.execute();
       _currentSettings = getSettings.execute();
       emit(SettingsLoaded(settings: _currentSettings!));
     } catch (e) {

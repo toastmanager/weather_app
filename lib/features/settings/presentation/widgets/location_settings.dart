@@ -35,6 +35,7 @@ class _LocationSettingsState extends State<LocationSettings> {
         longitudeController.text = state.settings.longitude.toString();
         latitudeController.text = state.settings.latitude.toString();
       }
+      return;
     }, builder: (context, state) {
       final bloc = context.read<SettingsBloc>();
       if (state is SettingsLoading) {

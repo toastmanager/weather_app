@@ -6,5 +6,5 @@ class SaveSettings {
 
   SaveSettings({required this.repository});
 
-  Future<void> execute(Settings settings) => repository.saveSettigns(settings);
+  void execute(Settings settings) => repository.saveSettigns(settings);
 }
