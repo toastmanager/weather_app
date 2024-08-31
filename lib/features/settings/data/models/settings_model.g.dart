@@ -11,6 +11,7 @@ SettingsModel _$SettingsModelFromJson(Map<String, dynamic> json) =>
       longitude: (json['longitude'] as num).toDouble(),
       latitude: (json['latitude'] as num).toDouble(),
       languageCode: json['language_code'] as String,
+      primaryColor: (json['primaryColor'] as num).toInt(),
     );
 
 Map<String, dynamic> _$SettingsModelToJson(SettingsModel instance) =>
@@ -18,4 +19,5 @@ Map<String, dynamic> _$SettingsModelToJson(SettingsModel instance) =>
       'longitude': instance.longitude,
       'latitude': instance.latitude,
       'language_code': instance.languageCode,
+      'primaryColor': instance.primaryColor,
     };

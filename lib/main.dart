@@ -1,7 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:weather_app/core/routes/router.dart';
+import 'package:weather_app/features/settings/presentation/blocs/settings/settings_bloc.dart';
 import 'package:weather_app/injection.dart' as di;
 
 void main() async {
@@ -19,28 +21,52 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final appRouter = di.locator<AppRouter>();
 
-    return MaterialApp.router(
-      title: 'Weather Forecast App',
-      scrollBehavior: CustomScrollBehavior(),
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-        filledButtonTheme: const FilledButtonThemeData(
-          style: ButtonStyle(
-            padding: WidgetStatePropertyAll(EdgeInsets.fromLTRB(20, 16, 20, 16))
-          )
-        ),
-        outlinedButtonTheme: const OutlinedButtonThemeData(
-          style: ButtonStyle(
-            padding: WidgetStatePropertyAll(EdgeInsets.fromLTRB(20, 16, 20, 16))
-          )
-        ),
-        textTheme: Theme.of(context).textTheme.apply(
-              fontSizeDelta: 2,
-              fontFamily: GoogleFonts.onest().fontFamily,
+    return BlocProvider(
+      create: (context) => di.locator<SettingsBloc>(),
+      child: BlocBuilder<SettingsBloc, SettingsState>(
+        builder: (context, state) {
+          context.read<SettingsBloc>().add(SettingsLoadEvent());
+          if (state is SettingsLoaded) {
+            return MaterialApp.router(
+              title: 'Weather Forecast App',
+              scrollBehavior: CustomScrollBehavior(),
+              theme: ThemeData(
+                colorScheme: ColorScheme.fromSeed(seedColor: Color(state.settings.primaryColor)),
+                useMaterial3: true,
+                filledButtonTheme: const FilledButtonThemeData(
+                    style: ButtonStyle(
+                        padding: WidgetStatePropertyAll(
+                            EdgeInsets.fromLTRB(20, 16, 20, 16)))),
+                outlinedButtonTheme: const OutlinedButtonThemeData(
+                    style: ButtonStyle(
+                        padding: WidgetStatePropertyAll(
+                            EdgeInsets.fromLTRB(20, 16, 20, 16)))),
+                textTheme: Theme.of(context).textTheme.apply(
+                      fontSizeDelta: 2,
+                      fontFamily: GoogleFonts.onest().fontFamily,
+                    ),
+              ),
+              routerConfig: appRouter.config(),
+            );
+          }
+
+          Widget child = const Text('Unexpected Error');
+          if (state is SettingsError) {
+            child = Text(state.message);
+          }
+          if (state is SettingsLoading) {
+            child = const CircularProgressIndicator();
+          }
+
+          return MaterialApp(
+            home: Scaffold(
+              body: Center(
+                child: child,
+              ),
             ),
+          );
+        },
       ),
-      routerConfig: appRouter.config(),
     );
   }
 }

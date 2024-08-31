@@ -12,24 +12,25 @@ class SettingsModel extends Equatable {
   final double latitude;
   @JsonKey(name: 'language_code')
   final String languageCode;
-  // TODO: add primary color variable
-  // final ? primaryColor;
+  final int primaryColor;
 
   const SettingsModel(
       {required this.longitude,
       required this.latitude,
-      required this.languageCode});
+      required this.languageCode,
+      required this.primaryColor});
 
   Settings toEntity() {
     return Settings(
-        longitude: longitude, latitude: latitude, languageCode: languageCode);
+        longitude: longitude, latitude: latitude, languageCode: languageCode, primaryColor: primaryColor);
   }
 
   factory SettingsModel.fromEntity(Settings entity) {
     return SettingsModel(
         longitude: entity.longitude,
         latitude: entity.latitude,
-        languageCode: entity.languageCode);
+        languageCode: entity.languageCode,
+        primaryColor: entity.primaryColor);
   }
 
   // Json
