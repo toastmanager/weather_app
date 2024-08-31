@@ -5,6 +5,7 @@ import 'package:weather_app/features/settings/presentation/blocs/settings/settin
 import 'package:weather_app/features/settings/presentation/widgets/language_settings.dart';
 import 'package:weather_app/features/settings/presentation/widgets/location_settings.dart';
 import 'package:weather_app/features/settings/presentation/widgets/primary_color_settings.dart';
+import 'package:weather_app/injection.dart';
 
 @RoutePage()
 class SettingsPage extends StatelessWidget {
@@ -12,33 +13,37 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Settings'),
-        centerTitle: true,
-      ),
-      bottomNavigationBar: const Padding(
-        padding: EdgeInsets.only(left: 24, right: 24, bottom: 24),
-        child: SettingsPageActions(),
-      ),
-      // floatingActionButton: const Expanded(child: ),
-      body: Builder(builder: (context) {
-        return const Padding(
-          padding: EdgeInsets.all(24.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                LocationSettings(),
-                SizedBox(height: 24),
-                LanguageSettings(),
-                SizedBox(height: 24),
-                PrimaryColorSettings(),
-              ],
+    return BlocProvider(
+      create: (context) => locator<SettingsBloc>(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Settings'),
+          centerTitle: true,
+        ),
+        bottomNavigationBar: const Padding(
+          padding: EdgeInsets.only(left: 24, right: 24, bottom: 24),
+          child: SettingsPageActions(),
+        ),
+        // floatingActionButton: const Expanded(child: ),
+        body: Builder(builder: (context) {
+          context.read<SettingsBloc>().add(SettingsLoadEvent());
+          return const Padding(
+            padding: EdgeInsets.all(24.0),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  LocationSettings(),
+                  SizedBox(height: 24),
+                  LanguageSettings(),
+                  SizedBox(height: 24),
+                  PrimaryColorSettings(),
+                ],
+              ),
             ),
-          ),
-        );
-      }),
+          );
+        }),
+      ),
     );
   }
 }

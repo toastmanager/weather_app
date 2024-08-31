@@ -9,7 +9,7 @@ final locator = GetIt.instance;
 
 Future<void> initDI() async {
   locator.registerLazySingletonAsync<SharedPreferences>(() => SharedPreferences.getInstance());
-  await locator.isReady<SharedPreferences>();
+  locator.isReady<SharedPreferences>();
   
   await settingsDIInit();
 
