@@ -42,14 +42,14 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   void _onUpdateLongitude(UpdateLongitude event, Emitter<SettingsState> emit) {
     if (_currentSettings != null) {
       _currentSettings = _currentSettings!.copyWith(longitude: event.longitude);
-      emit(SettingsLoaded(settings: _currentSettings!));
+      // emit(SettingsLoaded(settings: _currentSettings!));
     }
   }
 
   void _onUpdateLatitude(UpdateLatitude event, Emitter<SettingsState> emit) {
     if (_currentSettings != null) {
       _currentSettings = _currentSettings!.copyWith(latitude: event.latitude);
-      emit(SettingsLoaded(settings: _currentSettings!));
+      // emit(SettingsLoaded(settings: _currentSettings!));
     }
   }
 

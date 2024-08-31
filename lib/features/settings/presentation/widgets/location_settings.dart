@@ -29,12 +29,12 @@ class _LocationSettingsState extends State<LocationSettings> {
   }
 
   void _updateLatitude(String value, SettingsBloc bloc) {
-    final latitude = double.tryParse(value) ?? 0.0;
+    final latitude = double.tryParse(latitudeController.text) ?? 0.0;
     bloc.add(UpdateLatitude(latitude: latitude));
   }
 
   void _updateLongitude(String value, SettingsBloc bloc) {
-    final longitude = double.tryParse(value) ?? 0.0;
+    final longitude = double.tryParse(longitudeController.text) ?? 0.0;
     bloc.add(UpdateLongitude(longitude: longitude));
   }
 
@@ -70,7 +70,7 @@ class _LocationSettingsState extends State<LocationSettings> {
                   border: OutlineInputBorder(), label: Text('Latitude')),
               keyboardType: TextInputType.number,
               controller: latitudeController,
-              onSubmitted: (value) => _updateLatitude(value, bloc),
+              onChanged: (value) => _updateLatitude(value, bloc),
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'(^-?\d*\.?\d*)'))
               ]),
@@ -82,7 +82,7 @@ class _LocationSettingsState extends State<LocationSettings> {
                   border: OutlineInputBorder(), label: Text('Longitude')),
               keyboardType: TextInputType.number,
               controller: longitudeController,
-              onSubmitted: (value) => _updateLongitude(value, bloc),
+              onChanged: (value) => _updateLongitude(value, bloc),
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'(^-?\d*\.?\d*)'))
               ]),
