@@ -1,3 +1,4 @@
+import 'package:weather_app/features/settings/data/datasources/local/settings_local_datasource.dart';
 import 'package:weather_app/features/weather/data/datasources/remote/weather_remote_datasource.dart';
 import 'package:weather_app/features/weather/data/datasources/remote/weather_rest_client.dart';
 import 'package:weather_app/features/weather/data/repositories/weather_repository_impl.dart';
@@ -11,12 +12,13 @@ Future<void> weatherDIInit() async {
 
   locator.registerLazySingleton(() => FetchWeather(repository: locator()));
 
-  locator.registerLazySingleton<WeatherRepository>(() => WeatherRepositoryImpl(
-      weatherRemoteDataSource: locator()));
+  locator.registerLazySingleton<WeatherRepository>(
+      () => WeatherRepositoryImpl(weatherRemoteDataSource: locator()));
 
-  locator.registerLazySingleton<WeatherRemoteDataSource>(
-    () => WeatherRemoteDataSourceImpl(client: locator())
-  );
+  locator.registerLazySingleton<WeatherRemoteDataSource>(() =>
+      WeatherRemoteDataSourceImpl(
+          client: locator<WeatherRestClient>(),
+          settingsLocalDataSource: locator<SettingsLocalDataSource>()));
 
   locator.registerLazySingleton<WeatherRestClient>(
     () => WeatherRestClient(locator()),

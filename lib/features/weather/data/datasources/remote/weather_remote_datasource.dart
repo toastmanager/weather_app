@@ -1,9 +1,7 @@
-import 'package:objectbox/objectbox.dart';
-import 'package:weather_app/features/settings/data/datasources/local/default_settings.dart';
+import 'package:weather_app/features/settings/data/datasources/local/settings_local_datasource.dart';
 import 'package:weather_app/features/settings/data/models/settings_model.dart';
 import 'package:weather_app/features/weather/data/datasources/remote/weather_rest_client.dart';
 import 'package:weather_app/features/weather/data/models/weather_model.dart';
-import 'package:weather_app/injection.dart';
 
 abstract class WeatherRemoteDataSource {
   Future<WeatherModel> get();
@@ -11,13 +9,15 @@ abstract class WeatherRemoteDataSource {
 
 class WeatherRemoteDataSourceImpl implements WeatherRemoteDataSource {
   final WeatherRestClient client;
+  final SettingsLocalDataSource settingsLocalDataSource;
 
-  const WeatherRemoteDataSourceImpl({required this.client});
+  const WeatherRemoteDataSourceImpl(
+      {required this.client, required this.settingsLocalDataSource});
 
   @override
   Future<WeatherModel> get() async {
     try {
-      final SettingsModel settings = locator<Box<SettingsModel>>().get(1) ?? defaultSettings;
+      final SettingsModel settings = settingsLocalDataSource.get();
       return await client.getWeather(settings.latitude, settings.longitude);
     } catch (e) {
       rethrow;

@@ -1,35 +1,38 @@
-import 'package:objectbox/objectbox.dart';
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/features/settings/data/datasources/local/default_settings.dart';
+import 'package:weather_app/features/settings/data/datasources/local/settings_preference_keys.dart';
 import 'package:weather_app/features/settings/data/models/settings_model.dart';
-import 'package:weather_app/objectbox.dart';
 
 abstract class SettingsLocalDataSource {
-  void save(SettingsModel settings);
-  void reset();
+  Future<void> save(SettingsModel settings);
+  Future<void> reset();
   SettingsModel get();
 }
 
 class SettingsLocalDatasourceImpl implements SettingsLocalDataSource {
-  final ObjectBox objectBox;
-  final Box<SettingsModel> settingsBox;
+  final SharedPreferences prefs;
 
-  const SettingsLocalDatasourceImpl({required this.objectBox, required this.settingsBox});
+  const SettingsLocalDatasourceImpl({required this.prefs});
 
   @override
   SettingsModel get() {
-    SettingsModel? settings = settingsBox.get(1);
-    settings ??= settingsBox.get(settingsBox.put(defaultSettings));
-
-    return settings!;
+    String? settingsJson = prefs.getString(SettingsPreferenceKeys.settings);
+    if (settingsJson == null) {
+      reset();
+      settingsJson = jsonEncode(defaultSettings);
+    }
+    return SettingsModel.fromJson(jsonDecode(settingsJson));
   }
 
   @override
-  void reset() async {
-    settingsBox.put(defaultSettings);
+  Future<void> reset() async {
+    await save(defaultSettings);
   }
-  
+
   @override
-  void save(SettingsModel settings) async {
-    settingsBox.put(settings);
+  Future<void> save(SettingsModel settings) async {
+    await prefs.setString(
+        SettingsPreferenceKeys.settings, jsonEncode(settings.toJson()));
   }
 }

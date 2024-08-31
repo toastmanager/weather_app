@@ -27,6 +27,16 @@ class _LocationSettingsState extends State<LocationSettings> {
     super.dispose();
   }
 
+  void _updateLatitude(String value, SettingsBloc bloc) {
+    final latitude = double.tryParse(value) ?? 0.0;
+    bloc.add(UpdateLatitude(latitude: latitude));
+  }
+
+  void _updateLongitude(String value, SettingsBloc bloc) {
+    final longitude = double.tryParse(value) ?? 0.0;
+    bloc.add(UpdateLongitude(longitude: longitude));
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SettingsBloc, SettingsState>(
@@ -59,10 +69,7 @@ class _LocationSettingsState extends State<LocationSettings> {
                 border: OutlineInputBorder(), label: Text('Latitude')),
             keyboardType: TextInputType.number,
             controller: latitudeController,
-            onSubmitted: (value) {
-              final latitude = double.tryParse(value) ?? 0.0;
-              bloc.add(UpdateLatitude(latitude: latitude));
-            },
+            onSubmitted: (value) => _updateLatitude(value, bloc),
           ),
           const SizedBox(
             height: 12,
@@ -72,10 +79,7 @@ class _LocationSettingsState extends State<LocationSettings> {
                 border: OutlineInputBorder(), label: Text('Longitude')),
             keyboardType: TextInputType.number,
             controller: longitudeController,
-            onSubmitted: (value) {
-              final longitude = double.tryParse(value) ?? 0.0;
-              bloc.add(UpdateLongitude(longitude: longitude));
-            },
+            onSubmitted: (value) => _updateLongitude(value, bloc),
           ),
         ],
       );

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 @immutable
 class Settings extends Equatable {
-  final int id;
   final double longitude;
   final double latitude;
   final String languageCode;
@@ -11,8 +10,7 @@ class Settings extends Equatable {
   // final ? primaryColor;
 
   const Settings(
-      {required this.id,
-      required this.longitude,
+      {required this.longitude,
       required this.latitude,
       required this.languageCode});
 
@@ -23,7 +21,6 @@ class Settings extends Equatable {
     String? languageCode,
   }) {
     return Settings(
-        id: id ?? this.id,
         longitude: longitude ?? this.longitude,
         latitude: latitude ?? this.latitude,
         languageCode: languageCode ?? this.languageCode);
