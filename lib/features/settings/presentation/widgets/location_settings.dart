@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/features/settings/presentation/blocs/settings/settings_bloc.dart';
 
@@ -65,22 +66,26 @@ class _LocationSettingsState extends State<LocationSettings> {
             height: 24,
           ),
           TextField(
-            decoration: const InputDecoration(
-                border: OutlineInputBorder(), label: Text('Latitude')),
-            keyboardType: TextInputType.number,
-            controller: latitudeController,
-            onSubmitted: (value) => _updateLatitude(value, bloc),
-          ),
+              decoration: const InputDecoration(
+                  border: OutlineInputBorder(), label: Text('Latitude')),
+              keyboardType: TextInputType.number,
+              controller: latitudeController,
+              onSubmitted: (value) => _updateLatitude(value, bloc),
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'(^-?\d*\.?\d*)'))
+              ]),
           const SizedBox(
             height: 12,
           ),
           TextField(
-            decoration: const InputDecoration(
-                border: OutlineInputBorder(), label: Text('Longitude')),
-            keyboardType: TextInputType.number,
-            controller: longitudeController,
-            onSubmitted: (value) => _updateLongitude(value, bloc),
-          ),
+              decoration: const InputDecoration(
+                  border: OutlineInputBorder(), label: Text('Longitude')),
+              keyboardType: TextInputType.number,
+              controller: longitudeController,
+              onSubmitted: (value) => _updateLongitude(value, bloc),
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'(^-?\d*\.?\d*)'))
+              ]),
         ],
       );
     });
